@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { cuestionarioData } from './preguntas';
+import { guardarRespuestasEnFirebase } from './firebase-config';
 import './Cuestionario.css';
 
 export default function Cuestionario() {
@@ -9,6 +10,7 @@ export default function Cuestionario() {
   const [textoOtro, setTextoOtro] = useState('');
   const [respuestas, setRespuestas] = useState([]);
   const [errorServidor, setErrorServidor] = useState('');
+  const [guardando, setGuardando] = useState(false);
 
   const { pregunta, opciones } = cuestionarioData[preguntaActual];
   const esPreguntaNombre = preguntaActual === 0;
@@ -20,21 +22,15 @@ export default function Cuestionario() {
   };
 
   const enviarRespuestasAlServidor = async (nuevasRespuestas) => {
+    setGuardando(true);
     try {
-      const respuesta = await fetch('/api/respuestas', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(nuevasRespuestas),
-      });
-
-      if (!respuesta.ok) {
-        throw new Error('Error al guardar en el servidor');
-      }
+      await guardarRespuestasEnFirebase(nuevasRespuestas);
+      console.log('Respuestas guardadas exitosamente en Firebase');
     } catch (error) {
-      console.error(error);
-      setErrorServidor('No se pudo guardar en el servidor. Intenta de nuevo más tarde.');
+      console.error('Error al guardar:', error);
+      setErrorServidor('Error al guardar las respuestas. Por favor intenta de nuevo.');
+    } finally {
+      setGuardando(false);
     }
   };
 

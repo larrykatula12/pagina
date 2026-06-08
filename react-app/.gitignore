@@ -24,3 +24,5 @@ yarn-error.log*
 
 # Guardar respuestas localmente sin subir al repositorio
 /respuestas.json
+/server.js
+/firebaseConfig.js
