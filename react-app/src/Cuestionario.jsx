@@ -3,61 +3,94 @@ import { cuestionarioData } from './preguntas';
 import './Cuestionario.css';
 
 export default function Cuestionario() {
+  const [fase, setFase] = useState('inicio');
   const [preguntaActual, setPreguntaActual] = useState(0);
   const [opcionSeleccionada, setOpcionSeleccionada] = useState('');
-  const [puntaje, setPuntaje] = useState(0);
-  const [mostrarResultado, setMostrarResultado] = useState(false);
 
-  const { pregunta, opciones, respuestaCorrecta } = cuestionarioData[preguntaActual];
+  const { pregunta, opciones } = cuestionarioData[preguntaActual];
 
   const handleSeleccionarOpcion = (opcion) => {
     setOpcionSeleccionada(opcion);
   };
 
   const handleSiguientePregunta = () => {
-    if (opcionSeleccionada === respuestaCorrecta) {
-      setPuntaje(puntaje + 1);
-    }
-
     const siguienteIndex = preguntaActual + 1;
 
     if (siguienteIndex < cuestionarioData.length) {
       setPreguntaActual(siguienteIndex);
       setOpcionSeleccionada('');
     } else {
-      setMostrarResultado(true);
+      setFase('resultado');
     }
   };
 
   const reiniciarCuestionario = () => {
+    setFase('inicio');
     setPreguntaActual(0);
     setOpcionSeleccionada('');
-    setPuntaje(0);
-    setMostrarResultado(false);
   };
 
-  if (mostrarResultado) {
-    const porcentaje = Math.round((puntaje / cuestionarioData.length) * 100);
-    let mensaje = '';
-
-    if (porcentaje === 100) {
-      mensaje = '¡Excelente! ¡Obtuviste una puntuación perfecta!';
-    } else if (porcentaje >= 80) {
-      mensaje = '¡Muy bien! ¡Gran desempeño!';
-    } else if (porcentaje >= 60) {
-      mensaje = 'Bien, puedes mejorar. ¡Intenta de nuevo!';
+  const iniciarParticipacion = (participa) => {
+    if (participa) {
+      setFase('mensaje');
     } else {
-      mensaje = 'Necesitas practicar más. ¡Vuelve a intentarlo!';
+      setFase('no');
     }
+  };
 
+  const comenzarCuestionario = () => {
+    setFase('cuestionario');
+    setPreguntaActual(0);
+    setOpcionSeleccionada('');
+  };
+
+  if (fase === 'inicio') {
+    return (
+      <div className="cuestionario-container intro-container">
+        <h2 className="pregunta-titulo">¿Quieres participar?</h2>
+        <div className="intro-buttons">
+          <button className="opcion-button" onClick={() => iniciarParticipacion(true)}>
+            Sí
+          </button>
+          <button className="opcion-button" onClick={() => iniciarParticipacion(false)}>
+            No
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  if (fase === 'mensaje') {
+    return (
+      <div className="cuestionario-container intro-container">
+        <h2 className="pregunta-titulo">Adelante</h2>
+        <p className="resultado-texto">Responde estas preguntas de forma sencilla y disfruta el cuestionario.</p>
+        <button onClick={comenzarCuestionario} className="continuar-button">
+          Comenzar cuestionario
+        </button>
+      </div>
+    );
+  }
+
+  if (fase === 'no') {
     return (
       <div className="cuestionario-container resultado-container">
-        <h2 className="resultado-titulo">¡Cuestionario Finalizado!</h2>
-        <div className="resultado-score">{puntaje}/{cuestionarioData.length}</div>
-        <p className="resultado-texto">Porcentaje: <strong>{porcentaje}%</strong></p>
-        <p className="resultado-mensaje">{mensaje}</p>
+        <h2 className="resultado-titulo">Está bien, vas a participar igualmente</h2>
+        <p className="resultado-texto">Responde estas preguntas de forma sencilla y disfruta el cuestionario.</p>
+        <button onClick={comenzarCuestionario} className="continuar-button">
+          Comenzar cuestionario
+        </button>
+      </div>
+    );
+  }
+
+  if (fase === 'resultado') {
+    return (
+      <div className="cuestionario-container resultado-container">
+        <h2 className="resultado-titulo">¡Muchas gracias!</h2>
+        <p className="resultado-texto">Gracias por participar en el cuestionario.</p>
         <button onClick={reiniciarCuestionario} className="reintentar-button">
-          Intentar de nuevo
+          Regresar al inicio
         </button>
       </div>
     );
