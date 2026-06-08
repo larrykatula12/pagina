@@ -21,3 +21,6 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# Guardar respuestas localmente sin subir al repositorio
+/respuestas.json

@@ -1,32 +1,32 @@
 export const cuestionarioData = [
   {
     id: 1,
-    pregunta: "¿Cuál es el hook nativo de React utilizado para manejar el estado local?",
-    opciones: ["useEffect", "useState", "useContext", "useReducer"],
-    respuestaCorrecta: "useState"
+    pregunta: "¿Cuál es tu nombre?",
+    opciones: [],
   },
   {
     id: 2,
-    pregunta: "¿Qué significa la sigla SPA en el desarrollo web?",
-    opciones: ["Single Page Application", "Static Page Array", "Simple Protocol App", "Serial Port Access"],
-    respuestaCorrecta: "Single Page Application"
+    pregunta: "¿Qué quieres comer?",
+    opciones: ["Un elote", "Unos taco", "Una pizza", "Un sushi", "Una hamburguesa", "Otra cosa"],
   },
   {
     id: 3,
-    pregunta: "¿Cómo se pasan datos de un componente padre a un componente hijo en React?",
-    opciones: ["A través de State", "A través de Props", "Usando enlaces HTML", "Mediante cookies"],
-    respuestaCorrecta: "A través de Props"
+    pregunta: "¿Qué dia?",
+    opciones: ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"],
   },
   {
     id: 4,
-    pregunta: "¿Qué comando de Node.js se utiliza por defecto para inicializar un nuevo proyecto?",
-    opciones: ["npm start", "npm install", "npm init", "node run"],
-    respuestaCorrecta: "npm init"
+    pregunta: "¿A partir de que hora se iria?",
+    opciones: ["9:00 AM", "12:00 PM", "3:00 PM", "6:00 PM", "9:00 PM", "Especifica otra hora"],
   },
   {
     id: 5,
-    pregunta: "¿Cuál es el formato estándar más común para intercambiar datos en la web actualmente?",
-    opciones: ["XML", "CSV", "JSON", "TXT"],
-    respuestaCorrecta: "JSON"
+    pregunta: "¿Qué método de transporte prefieres?",
+    opciones: ["Carro (empujandolo porque no hay para la gota)", "Camion", "A pata", "Uber o similares"],
+  },
+  {
+    id: 6,
+    pregunta: "¿A que hora se terminaria?",
+    opciones: ["12:00 PM", "3:00 PM", "6:00 PM", "9:00 PM", "12:00 AM", "Especifica otra hora"],
   }
 ];

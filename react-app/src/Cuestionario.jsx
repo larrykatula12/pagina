@@ -6,20 +6,55 @@ export default function Cuestionario() {
   const [fase, setFase] = useState('inicio');
   const [preguntaActual, setPreguntaActual] = useState(0);
   const [opcionSeleccionada, setOpcionSeleccionada] = useState('');
+  const [textoOtro, setTextoOtro] = useState('');
+  const [respuestas, setRespuestas] = useState([]);
+  const [errorServidor, setErrorServidor] = useState('');
 
   const { pregunta, opciones } = cuestionarioData[preguntaActual];
+  const esPreguntaNombre = preguntaActual === 0;
+  const esOpcionConTexto = opcionSeleccionada === 'Otra cosa' || opcionSeleccionada === 'Especifica otra hora';
 
   const handleSeleccionarOpcion = (opcion) => {
     setOpcionSeleccionada(opcion);
+    setTextoOtro('');
   };
 
-  const handleSiguientePregunta = () => {
+  const enviarRespuestasAlServidor = async (nuevasRespuestas) => {
+    try {
+      const respuesta = await fetch('/api/respuestas', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(nuevasRespuestas),
+      });
+
+      if (!respuesta.ok) {
+        throw new Error('Error al guardar en el servidor');
+      }
+    } catch (error) {
+      console.error(error);
+      setErrorServidor('No se pudo guardar en el servidor. Intenta de nuevo más tarde.');
+    }
+  };
+
+  const handleSiguientePregunta = async () => {
     const siguienteIndex = preguntaActual + 1;
+    const nuevaRespuesta = {
+      pregunta,
+      respuesta: opcionSeleccionada,
+      detalle: esOpcionConTexto ? textoOtro : '',
+    };
+    const siguientesRespuestas = [...respuestas, nuevaRespuesta];
 
     if (siguienteIndex < cuestionarioData.length) {
+      setRespuestas(siguientesRespuestas);
       setPreguntaActual(siguienteIndex);
       setOpcionSeleccionada('');
+      setTextoOtro('');
     } else {
+      setRespuestas(siguientesRespuestas);
+      await enviarRespuestasAlServidor(siguientesRespuestas);
       setFase('resultado');
     }
   };
@@ -28,6 +63,8 @@ export default function Cuestionario() {
     setFase('inicio');
     setPreguntaActual(0);
     setOpcionSeleccionada('');
+    setTextoOtro('');
+    setRespuestas([]);
   };
 
   const iniciarParticipacion = (participa) => {
@@ -42,12 +79,14 @@ export default function Cuestionario() {
     setFase('cuestionario');
     setPreguntaActual(0);
     setOpcionSeleccionada('');
+    setTextoOtro('');
+    setRespuestas([]);
   };
 
   if (fase === 'inicio') {
     return (
       <div className="cuestionario-container intro-container">
-        <h2 className="pregunta-titulo">¿Quieres participar?</h2>
+        <h2 className="pregunta-titulo">¿Quieres salir conmigo?</h2>
         <div className="intro-buttons">
           <button className="opcion-button" onClick={() => iniciarParticipacion(true)}>
             Sí
@@ -75,7 +114,7 @@ export default function Cuestionario() {
   if (fase === 'no') {
     return (
       <div className="cuestionario-container resultado-container">
-        <h2 className="resultado-titulo">Está bien, vas a participar igualmente</h2>
+        <h2 className="resultado-titulo">Está bien, vamos a salir igualmente</h2>
         <p className="resultado-texto">Responde estas preguntas de forma sencilla y disfruta el cuestionario.</p>
         <button onClick={comenzarCuestionario} className="continuar-button">
           Comenzar cuestionario
@@ -87,8 +126,12 @@ export default function Cuestionario() {
   if (fase === 'resultado') {
     return (
       <div className="cuestionario-container resultado-container">
-        <h2 className="resultado-titulo">¡Muchas gracias!</h2>
-        <p className="resultado-texto">Gracias por participar en el cuestionario.</p>
+        <h2 className="resultado-titulo">¡Muchas gracias por aceptar!</h2>
+        <p className="resultado-texto">Se te informara sobre los detalles del evento en el corto plazo.</p>
+        <p className="resultado-texto">
+          Tus respuestas fueron enviadas y guardadas en el servidor.
+        </p>
+        {errorServidor && <p className="resultado-error">{errorServidor}</p>}
         <button onClick={reiniciarCuestionario} className="reintentar-button">
           Regresar al inicio
         </button>
@@ -112,24 +155,58 @@ export default function Cuestionario() {
 
       <h3 className="pregunta-titulo">{pregunta}</h3>
 
-      <div className="opciones-container">
-        {opciones.map((opcion, index) => {
-          const esSeleccionada = opcionSeleccionada === opcion;
-          return (
-            <button
-              key={index}
-              onClick={() => handleSeleccionarOpcion(opcion)}
-              className={`opcion-button ${esSeleccionada ? 'seleccionada' : ''}`}
-            >
-              {opcion}
-            </button>
-          );
-        })}
-      </div>
+      {esPreguntaNombre ? (
+        <div className="input-otra-opcion">
+          <label htmlFor="nombreUsuario" className="input-label">
+            Agregar nombre
+          </label>
+          <input
+            id="nombreUsuario"
+            type="text"
+            value={opcionSeleccionada}
+            onChange={(e) => setOpcionSeleccionada(e.target.value)}
+            placeholder="Escribe tu nombre..."
+            className="texto-otro-input"
+          />
+        </div>
+      ) : (
+        <div className="opciones-container">
+          {opciones.map((opcion, index) => {
+            const esSeleccionada = opcionSeleccionada === opcion;
+            return (
+              <button
+                key={index}
+                onClick={() => handleSeleccionarOpcion(opcion)}
+                className={`opcion-button ${esSeleccionada ? 'seleccionada' : ''}`}
+              >
+                {opcion}
+              </button>
+            );
+          })}
+        </div>
+      )}
+
+      {esOpcionConTexto && (
+        <div className="input-otra-opcion">
+          <label htmlFor="textoOtro" className="input-label">
+            {opcionSeleccionada === 'Otra cosa'
+              ? 'Escribe qué quieres comer:'
+              : 'Especifica la hora:'}
+          </label>
+          <input
+            id="textoOtro"
+            type="text"
+            value={textoOtro}
+            onChange={(e) => setTextoOtro(e.target.value)}
+            placeholder={opcionSeleccionada === 'Otra cosa' ? 'Escribe otra opción...' : 'Escribe la hora...'}
+            className="texto-otro-input"
+          />
+        </div>
+      )}
 
       <button
         onClick={handleSiguientePregunta}
-        disabled={!opcionSeleccionada}
+        disabled={!opcionSeleccionada || (esOpcionConTexto && !textoOtro.trim())}
         className="continuar-button"
       >
         Continuar
