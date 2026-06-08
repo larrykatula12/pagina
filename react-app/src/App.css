@@ -3,5 +3,27 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: transparent;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+  background-size: 400% 400%;
+  animation: gradientShift 8s ease infinite;
+  padding: 20px;
+}
+
+/* Aumentar padding en desktop */
+@media (min-width: 1024px) {
+  .App {
+    padding: 40px 20px;
+  }
+}
+
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }
