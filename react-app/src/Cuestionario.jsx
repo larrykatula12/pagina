@@ -202,10 +202,10 @@ export default function Cuestionario() {
 
       <button
         onClick={handleSiguientePregunta}
-        disabled={!opcionSeleccionada || (esOpcionConTexto && !textoOtro.trim())}
+        disabled={!opcionSeleccionada || (esOpcionConTexto && !textoOtro.trim()) || guardando}
         className="continuar-button"
       >
-        Continuar
+        {guardando ? 'Guardando...' : 'Continuar'}
       </button>
     </div>
   );
