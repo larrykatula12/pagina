@@ -1,4 +1,3 @@
-// preguntas.js
 export const cuestionarioData = [
   {
     id: 1,
