@@ -46,12 +46,12 @@ REACT_APP_FIREBASE_APP_ID=1:123456789:web:abc123
 
 ### 5. Ejecutar el proyecto localmente
 ```bash
-npm start
+pnpm start
 ```
 
 ### 6. Compilar y desplegar en Netlify
 ```bash
-npm run build
+pnpm build
 ```
 
 Luego arrastra la carpeta `build` a Netlify Drop, o configura variables de entorno en Netlify:
