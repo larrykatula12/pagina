@@ -1,4 +1,30 @@
-/* Estilos generales */
+/* ==================== VARIABLES GLOBALES ==================== */
+:root {
+  /* Paleta de Colores */
+  --color-bg-body: rgb(104, 0, 249); /* Morado sólido uniforme */
+  --color-bg-card: #ffffff; /* Contenedor blanco puro */
+  --color-bg-button: #ffffff; /* Botones blancos puros */
+  
+  --color-grad-1: rgb(104, 0, 249);
+  --color-grad-2: rgb(118, 75, 162);
+  --color-grad-3: rgb(240, 147, 251);
+  
+  --color-text-main: #2d3748;
+  --color-text-muted: #718096;
+  --color-text-light: #cbd5e0;
+  
+  --color-border: #e8e8e8;
+  --color-error-bg: #fed7d7;
+  --color-error-text: #e53e3e;
+
+  /* Fuentes y Sombras */
+  --font-family-main: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  --shadow-card: 0 20px 60px rgba(0, 0, 0, 0.2);
+  --shadow-btn-hover: 0 8px 24px rgba(104, 0, 249, 0.15);
+  --shadow-btn-active: 0 8px 28px rgba(104, 0, 249, 0.3);
+}
+
+/* ==================== ESTILOS GENERALES ==================== */
 * {
   margin: 0;
   padding: 0;
@@ -6,133 +32,58 @@
 }
 
 body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: var(--font-family-main);
   min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 20px;
+  background-color: var(--color-bg-body);
 }
 
-/* ==================== ANIMACIONES GENERALES ==================== */
-
+/* ==================== ANIMACIONES ==================== */
 @keyframes slideUp {
-  from {
-    opacity: 0;
-    transform: translateY(40px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes slideDown {
-  from {
-    opacity: 0;
-    transform: translateY(-40px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(-40px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes scaleIn {
-  from {
-    opacity: 0;
-    transform: scale(0.95);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
-@keyframes float {
-  0%, 100% {
-    transform: translateY(0px);
-  }
-  50% {
-    transform: translateY(-10px);
-  }
-}
-
-@keyframes pulse {
-  0%, 100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.8;
-  }
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
 }
 
 @keyframes shimmer {
-  0% {
-    background-position: -1000px 0;
-  }
-  100% {
-    background-position: 1000px 0;
-  }
+  0% { background-position: -1000px 0; }
+  100% { background-position: 1000px 0; }
 }
 
 @keyframes fadeInLeft {
-  from {
-    opacity: 0;
-    transform: translateX(-30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-@keyframes gradientShift {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
+  from { opacity: 0; transform: translateX(-30px); }
+  to { opacity: 1; transform: translateX(0); }
 }
 
 @keyframes spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }
 
 /* ==================== CONTENEDOR PRINCIPAL ==================== */
-
 .cuestionario-container {
-  background: white;
+  background: var(--color-bg-card);
   border-radius: 20px;
-  box-shadow: 0 20px 60px rgba(102, 126, 234, 0.3),
-              0 0 40px rgba(240, 147, 251, 0.1);
+  box-shadow: var(--shadow-card);
   padding: 40px;
   max-width: 800px;
   width: 100%;
   animation: slideUp 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
   position: relative;
   overflow: hidden;
-  border: 2px solid rgba(102, 126, 234, 0.1);
-}
-
-.cuestionario-container::before {
-  content: '';
-  position: absolute;
-  top: -50%;
-  right: -50%;
-  width: 100%;
-  height: 100%;
-  background: radial-gradient(circle, rgba(240, 147, 251, 0.1) 0%, transparent 70%);
-  pointer-events: none;
+  border: none;
 }
 
 .intro-container {
@@ -140,7 +91,6 @@ body {
 }
 
 /* ==================== PROGRESO ==================== */
-
 .progreso-container {
   margin-bottom: 40px;
   animation: fadeInLeft 0.6s ease-out;
@@ -148,7 +98,7 @@ body {
 
 .progreso-texto {
   font-size: 13px;
-  color: #667eea;
+  color: var(--color-bg-body);
   font-weight: 700;
   margin-bottom: 12px;
   display: block;
@@ -167,23 +117,25 @@ body {
 
 .progreso-fill {
   height: 100%;
-  background: linear-gradient(90deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+  background: linear-gradient(90deg, var(--color-grad-1) 0%, var(--color-grad-2) 50%, var(--color-grad-3) 100%);
   background-size: 200% 100%;
   transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
   border-radius: 15px;
-  box-shadow: 0 0 20px rgba(102, 126, 234, 0.6);
+  box-shadow: 0 0 20px rgb(104, 0, 249, 0.4);
   animation: shimmer 3s infinite;
 }
 
 /* ==================== TÍTULOS ==================== */
-
-.pregunta-titulo {
-  font-size: 28px;
+.pregunta-titulo, .resultado-titulo {
   font-weight: 800;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, var(--color-grad-1) 0%, var(--color-grad-2) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+}
+
+.pregunta-titulo {
+  font-size: 28px;
   margin-bottom: 35px;
   line-height: 1.3;
   animation: slideDown 0.5s ease-out;
@@ -192,17 +144,11 @@ body {
 
 .resultado-titulo {
   font-size: 32px;
-  font-weight: 800;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
   margin-bottom: 25px;
   animation: slideDown 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-/* ==================== BOTONES ==================== */
-
+/* ==================== BOTONES DE OPCIÓN ==================== */
 .opciones-container {
   display: flex;
   flex-direction: column;
@@ -221,13 +167,13 @@ body {
 .opcion-button {
   padding: 18px 24px;
   text-align: left;
-  background-color: #f8f9fa;
-  border: 2px solid #e8e8e8;
+  background-color: var(--color-bg-button); /* Ahora es blanco puro */
+  border: 2px solid var(--color-border);
   border-radius: 12px;
   cursor: pointer;
   font-size: 16px;
   font-weight: 500;
-  color: #2d3748;
+  color: var(--color-text-main);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
   overflow: hidden;
@@ -235,46 +181,29 @@ body {
   animation-fill-mode: both;
 }
 
+/* Retrasos escalonados */
 .opcion-button:nth-child(1) { animation-delay: 0.1s; }
 .opcion-button:nth-child(2) { animation-delay: 0.15s; }
 .opcion-button:nth-child(3) { animation-delay: 0.2s; }
 .opcion-button:nth-child(4) { animation-delay: 0.25s; }
 .opcion-button:nth-child(5) { animation-delay: 0.3s; }
 
-.opcion-button::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-  transition: left 0.5s ease;
-}
-
-.opcion-button:hover::before {
-  left: 100%;
-}
-
 .opcion-button:hover:not(:disabled) {
-  border-color: #667eea;
-  background: linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(240, 147, 251, 0.05) 100%);
+  border-color: var(--color-bg-body);
   transform: translateX(8px) scale(1.02);
-  box-shadow: 0 8px 24px rgba(102, 126, 234, 0.2);
+  box-shadow: var(--shadow-btn-hover);
 }
 
 .opcion-button.seleccionada {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  border-color: #667eea;
+  background: var(--color-bg-body);
+  border-color: var(--color-bg-body);
   color: white;
   font-weight: 700;
-  box-shadow: 0 8px 28px rgba(102, 126, 234, 0.4);
+  box-shadow: var(--shadow-btn-active);
   animation: scaleIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-.opcion-button:active:not(:disabled) {
-  transform: scale(0.98);
-}
+.opcion-button:active:not(:disabled) { transform: scale(0.98); }
 
 .opcion-button:disabled {
   cursor: not-allowed;
@@ -292,21 +221,19 @@ body {
 }
 
 /* ==================== BOTONES DE ACCIÓN ==================== */
-
 .continuar-button,
 .reintentar-button {
   width: 100%;
   padding: 16px 24px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
-  background-size: 200% 100%;
-  color: white;
-  border: none;
+  background: var(--color-bg-button); /* Blanco puro */
+  color: var(--color-bg-body); /* Texto morado */
+  border: 2px solid var(--color-bg-body); /* Borde morado para contrastar */
   border-radius: 12px;
   font-size: 16px;
   font-weight: 700;
   cursor: pointer;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 8px 24px rgba(102, 126, 234, 0.3);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
   position: relative;
   overflow: hidden;
   margin-top: 15px;
@@ -314,36 +241,19 @@ body {
   text-transform: uppercase;
 }
 
-.continuar-button::before,
-.reintentar-button::before {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 0;
-  height: 0;
-  background: rgba(255, 255, 255, 0.3);
-  border-radius: 50%;
-  transform: translate(-50%, -50%);
-  transition: width 0.6s, height 0.6s;
-}
-
-.continuar-button:active::before,
-.reintentar-button:active::before {
-  width: 300px;
-  height: 300px;
-}
-
 .continuar-button:hover:not(:disabled),
 .reintentar-button:hover:not(:disabled) {
   transform: translateY(-3px);
-  box-shadow: 0 12px 32px rgba(102, 126, 234, 0.4);
-  background-position: 100% 0;
+  background: var(--color-bg-body);
+  color: white;
+  box-shadow: var(--shadow-btn-active);
 }
 
 .continuar-button:disabled {
   opacity: 0.5;
   cursor: not-allowed;
+  border-color: var(--color-border);
+  color: var(--color-text-muted);
 }
 
 .continuar-button:disabled::after {
@@ -351,7 +261,8 @@ body {
   position: absolute;
   width: 12px;
   height: 12px;
-  background: white;
+  border: 2px solid var(--color-text-muted);
+  border-top-color: transparent;
   border-radius: 50%;
   right: 20px;
   top: 50%;
@@ -360,7 +271,6 @@ body {
 }
 
 /* ==================== INPUTS ==================== */
-
 .input-otra-opcion {
   margin-bottom: 25px;
   animation: slideUp 0.5s ease-out;
@@ -370,7 +280,7 @@ body {
   display: block;
   font-size: 14px;
   font-weight: 600;
-  color: #667eea;
+  color: var(--color-bg-body);
   margin-bottom: 10px;
   text-transform: uppercase;
   letter-spacing: 0.5px;
@@ -379,27 +289,25 @@ body {
 .texto-otro-input {
   width: 100%;
   padding: 14px 16px;
-  border: 2px solid #e8e8e8;
+  border: 2px solid var(--color-border);
   border-radius: 10px;
   font-size: 16px;
   font-family: inherit;
   transition: all 0.3s ease;
-  background-color: #f9f9f9;
+  background-color: var(--color-bg-button); /* Fondo blanco */
 }
 
 .texto-otro-input:focus {
   outline: none;
-  border-color: #667eea;
-  background-color: white;
-  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+  border-color: var(--color-bg-body);
+  box-shadow: 0 0 0 3px rgba(104, 0, 249, 0.15);
 }
 
 .texto-otro-input::placeholder {
-  color: #cbd5e0;
+  color: var(--color-text-light);
 }
 
 /* ==================== PANTALLA DE RESULTADOS ==================== */
-
 .resultado-container {
   text-align: center;
   animation: slideUp 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -407,7 +315,7 @@ body {
 
 .resultado-texto {
   font-size: 17px;
-  color: #718096;
+  color: var(--color-text-muted);
   margin-bottom: 15px;
   line-height: 1.7;
   animation: slideUp 0.7s ease-out;
@@ -418,7 +326,7 @@ body {
 .resultado-score {
   font-size: 56px;
   font-weight: 800;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+  background: linear-gradient(135deg, var(--color-grad-1) 0%, var(--color-grad-2) 50%, var(--color-grad-3) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -431,7 +339,7 @@ body {
 .resultado-mensaje {
   font-size: 18px;
   font-weight: 700;
-  color: #2d3748;
+  color: var(--color-text-main);
   margin: 25px 0;
   animation: slideUp 0.9s cubic-bezier(0.34, 1.56, 0.64, 1);
   animation-delay: 0.3s;
@@ -439,9 +347,9 @@ body {
 }
 
 .resultado-error {
-  color: #e53e3e;
+  color: var(--color-error-text);
   font-weight: 600;
-  background-color: #fed7d7;
+  background-color: var(--color-error-bg);
   padding: 12px 16px;
   border-radius: 8px;
   margin-bottom: 20px;
@@ -459,275 +367,75 @@ body {
 
 /* Desktop Grande (> 1200px) */
 @media (min-width: 1200px) {
-  .cuestionario-container {
-    padding: 50px 60px;
-    border-radius: 24px;
-  }
-
-  .pregunta-titulo {
-    font-size: 32px;
-    margin-bottom: 40px;
-  }
-
-  .resultado-titulo {
-    font-size: 36px;
-  }
-
-  .resultado-score {
-    font-size: 64px;
-  }
-
-  .opcion-button {
-    padding: 20px 28px;
-    font-size: 17px;
-  }
-
-  .intro-buttons .opcion-button {
-    padding: 18px 40px;
-    font-size: 20px;
-  }
-
-  .continuar-button,
-  .reintentar-button {
-    padding: 18px 28px;
-    font-size: 17px;
-  }
-
-  .progreso-container {
-    margin-bottom: 50px;
-  }
-
-  .progreso-texto {
-    font-size: 14px;
-  }
-
-  .progreso-bar {
-    height: 14px;
-  }
-
-  .resultado-texto {
-    font-size: 18px;
-  }
-
-  .input-label {
-    font-size: 15px;
-  }
-
-  .texto-otro-input {
-    padding: 16px 18px;
-    font-size: 17px;
-  }
+  .cuestionario-container { padding: 50px 60px; border-radius: 24px; }
+  .pregunta-titulo { font-size: 32px; margin-bottom: 40px; }
+  .resultado-titulo { font-size: 36px; }
+  .resultado-score { font-size: 64px; }
+  .opcion-button { padding: 20px 28px; font-size: 17px; }
+  .intro-buttons .opcion-button { padding: 18px 40px; font-size: 20px; }
+  .continuar-button, .reintentar-button { padding: 18px 28px; font-size: 17px; }
+  .progreso-container { margin-bottom: 50px; }
+  .progreso-texto { font-size: 14px; }
+  .progreso-bar { height: 14px; }
+  .resultado-texto { font-size: 18px; }
+  .input-label { font-size: 15px; }
+  .texto-otro-input { padding: 16px 18px; font-size: 17px; }
 }
 
 /* Desktop Medio (1025px - 1199px) */
 @media (min-width: 1025px) and (max-width: 1199px) {
-  .cuestionario-container {
-    padding: 45px 50px;
-    border-radius: 22px;
-  }
-
-  .pregunta-titulo {
-    font-size: 30px;
-    margin-bottom: 38px;
-  }
-
-  .resultado-titulo {
-    font-size: 34px;
-  }
-
-  .resultado-score {
-    font-size: 60px;
-  }
-
-  .opcion-button {
-    padding: 19px 26px;
-    font-size: 16px;
-  }
-
-  .intro-buttons .opcion-button {
-    padding: 17px 36px;
-    font-size: 19px;
-  }
-
-  .continuar-button,
-  .reintentar-button {
-    padding: 17px 26px;
-    font-size: 16px;
-  }
-
-  .resultado-texto {
-    font-size: 17px;
-  }
+  .cuestionario-container { padding: 45px 50px; border-radius: 22px; }
+  .pregunta-titulo { font-size: 30px; margin-bottom: 38px; }
+  .resultado-titulo { font-size: 34px; }
+  .resultado-score { font-size: 60px; }
+  .opcion-button { padding: 19px 26px; font-size: 16px; }
+  .intro-buttons .opcion-button { padding: 17px 36px; font-size: 19px; }
+  .continuar-button, .reintentar-button { padding: 17px 26px; font-size: 16px; }
+  .resultado-texto { font-size: 17px; }
 }
 
 /* Tablet y Desktop Pequeño (769px - 1024px) */
 @media (min-width: 769px) and (max-width: 1024px) {
-  .cuestionario-container {
-    padding: 40px 45px;
-    border-radius: 20px;
-    max-width: 750px;
-  }
-
-  .pregunta-titulo {
-    font-size: 26px;
-    margin-bottom: 35px;
-  }
-
-  .resultado-titulo {
-    font-size: 30px;
-  }
-
-  .resultado-score {
-    font-size: 50px;
-  }
-
-  .opcion-button {
-    padding: 17px 22px;
-    font-size: 15px;
-  }
-
-  .intro-buttons .opcion-button {
-    padding: 16px 32px;
-    font-size: 18px;
-  }
-
-  .continuar-button,
-  .reintentar-button {
-    padding: 16px 22px;
-    font-size: 15px;
-  }
-
-  .resultado-texto {
-    font-size: 16px;
-  }
-
-  .intro-buttons {
-    gap: 16px;
-  }
+  .cuestionario-container { padding: 40px 45px; border-radius: 20px; max-width: 750px; }
+  .pregunta-titulo { font-size: 26px; margin-bottom: 35px; }
+  .resultado-titulo { font-size: 30px; }
+  .resultado-score { font-size: 50px; }
+  .opcion-button { padding: 17px 22px; font-size: 15px; }
+  .intro-buttons .opcion-button { padding: 16px 32px; font-size: 18px; }
+  .continuar-button, .reintentar-button { padding: 16px 22px; font-size: 15px; }
+  .resultado-texto { font-size: 16px; }
+  .intro-buttons { gap: 16px; }
 }
 
 /* Tablet (481px - 768px) */
 @media (min-width: 481px) and (max-width: 768px) {
-  .cuestionario-container {
-    padding: 35px 30px;
-    border-radius: 18px;
-    max-width: 650px;
-  }
-
-  .pregunta-titulo {
-    font-size: 24px;
-    margin-bottom: 32px;
-  }
-
-  .resultado-titulo {
-    font-size: 28px;
-  }
-
-  .resultado-score {
-    font-size: 44px;
-  }
-
-  .opcion-button {
-    padding: 16px 20px;
-    font-size: 15px;
-  }
-
-  .intro-buttons .opcion-button {
-    padding: 15px 28px;
-    font-size: 16px;
-    min-width: 120px;
-  }
-
-  .continuar-button,
-  .reintentar-button {
-    padding: 14px 20px;
-    font-size: 15px;
-  }
-
-  .resultado-texto {
-    font-size: 15px;
-  }
-
-  .intro-buttons {
-    gap: 12px;
-  }
-
-  .progreso-container {
-    margin-bottom: 35px;
-  }
+  .cuestionario-container { padding: 35px 30px; border-radius: 18px; max-width: 650px; }
+  .pregunta-titulo { font-size: 24px; margin-bottom: 32px; }
+  .resultado-titulo { font-size: 28px; }
+  .resultado-score { font-size: 44px; }
+  .opcion-button { padding: 16px 20px; font-size: 15px; }
+  .intro-buttons .opcion-button { padding: 15px 28px; font-size: 16px; min-width: 120px; }
+  .continuar-button, .reintentar-button { padding: 14px 20px; font-size: 15px; }
+  .resultado-texto { font-size: 15px; }
+  .intro-buttons { gap: 12px; }
+  .progreso-container { margin-bottom: 35px; }
 }
 
 /* Teléfono (hasta 480px) */
 @media (max-width: 480px) {
-  .cuestionario-container {
-    padding: 28px 20px;
-    border-radius: 16px;
-    max-width: 550px;
-  }
-
-  .pregunta-titulo {
-    font-size: 20px;
-    margin-bottom: 25px;
-  }
-
-  .resultado-titulo {
-    font-size: 24px;
-  }
-
-  .resultado-score {
-    font-size: 36px;
-  }
-
-  .progreso-bar {
-    height: 10px;
-  }
-
-  .progreso-container {
-    margin-bottom: 28px;
-  }
-
-  .progreso-texto {
-    font-size: 12px;
-  }
-
-  .opcion-button {
-    padding: 14px 16px;
-    font-size: 14px;
-  }
-
-  .intro-buttons {
-    flex-direction: column;
-    gap: 10px;
-  }
-
-  .intro-buttons .opcion-button {
-    width: 100%;
-    min-width: unset;
-    padding: 14px 20px;
-    font-size: 15px;
-  }
-
-  .continuar-button,
-  .reintentar-button {
-    padding: 12px 16px;
-    font-size: 14px;
-    margin-top: 12px;
-  }
-
-  .resultado-texto {
-    font-size: 14px;
-  }
-
-  .input-label {
-    font-size: 13px;
-  }
-
-  .texto-otro-input {
-    padding: 12px 14px;
-    font-size: 14px;
-  }
-
-  .input-otra-opcion {
-    margin-bottom: 20px;
-  }
+  .cuestionario-container { padding: 28px 20px; border-radius: 16px; max-width: 550px; }
+  .pregunta-titulo { font-size: 20px; margin-bottom: 25px; }
+  .resultado-titulo { font-size: 24px; }
+  .resultado-score { font-size: 36px; }
+  .progreso-bar { height: 10px; }
+  .progreso-container { margin-bottom: 28px; }
+  .progreso-texto { font-size: 12px; }
+  .opcion-button { padding: 14px 16px; font-size: 14px; }
+  .intro-buttons { flex-direction: column; gap: 10px; }
+  .intro-buttons .opcion-button { width: 100%; min-width: unset; padding: 14px 20px; font-size: 15px; }
+  .continuar-button, .reintentar-button { padding: 12px 16px; font-size: 14px; margin-top: 12px; }
+  .resultado-texto { font-size: 14px; }
+  .input-label { font-size: 13px; }
+  .texto-otro-input { padding: 12px 14px; font-size: 14px; }
+  .input-otra-opcion { margin-bottom: 20px; }
 }
